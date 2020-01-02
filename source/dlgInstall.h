@@ -43,7 +43,7 @@ private:
     void        CleanUp();
     DlgState    dlgState        = DLG_CONFIRMATION;
     DlgMode     dlgMode         = DLG_INSTALL;
-    FsStorageId destStorageId   = FsStorageId_SdCard;
+    NcmStorageId destStorageId   = NcmStorageId_SdCard;
     bool        enoughSpace     = true;
     std::string filedir;
     std::string filename;

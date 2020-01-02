@@ -1,6 +1,6 @@
 #include "nspHelper.h"
 #include "virtualFile.h"
-#include "filehelper.h"
+#include "fileHelper.h"
 #include <Tinfoil/include/install/simple_filesystem.hpp>
 #include <Tinfoil/include/nx/content_meta.hpp>
 #include <Tinfoil/include/nx/ncm.hpp>
@@ -99,7 +99,7 @@ void InstallTicketCert(SimpleFileSystem& simpleFS)
 
 void InstallContentMetaRecords(tin::data::ByteBuffer&     installContentMetaBuf,
                                nx::ncm::ContentMeta&      contentMeta,
-                               const FsStorageId          destStorageId)
+                               const NcmStorageId          destStorageId)
 {
     NcmContentMetaDatabase contentMetaDatabase;
     NcmMetaRecord contentMetaKey = contentMeta.GetContentMetaKey();
@@ -116,7 +116,7 @@ void InstallContentMetaRecords(tin::data::ByteBuffer&     installContentMetaBuf,
     }
 }
 
-void InstallApplicationRecord(nx::ncm::ContentMeta& contentMeta, const FsStorageId destStorageId)
+void InstallApplicationRecord(nx::ncm::ContentMeta& contentMeta, const NcmStorageId destStorageId)
 {
     Result rc = 0;
     std::vector<ContentStorageRecord> storageRecords;
@@ -167,7 +167,7 @@ void InstallApplicationRecord(nx::ncm::ContentMeta& contentMeta, const FsStorage
     ASSERT_OK(nsPushApplicationRecord(baseTitleId, 0x3, storageRecords.data(), storageRecords.size() * sizeof(ContentStorageRecord)), "Failed to push application record\n");
 }
 
-void InstallNCA(SimpleFileSystem& simpleFS, const NcmNcaId& ncaId, const FsStorageId destStorageId)
+void InstallNCA(SimpleFileSystem& simpleFS, const NcmContentId& ncaId, const NcmStorageId destStorageId)
 {
     std::string ncaName = tin::util::GetNcaIdString(ncaId);
 
@@ -254,7 +254,7 @@ void InstallNCA(SimpleFileSystem& simpleFS, const NcmNcaId& ncaId, const FsStora
     catch (...) {}
 }
 
-bool virtualNCAFileExist(const std::string rootPath, const NcmNcaId& ncaId)
+bool virtualNCAFileExist(const std::string rootPath, const NcmContentId& ncaId)
 {
     std::string ncaName = tin::util::GetNcaIdString(ncaId);
     virtualFile virtualNCAFile;
@@ -277,7 +277,7 @@ bool virtualNCAFileExist(const std::string rootPath, const NcmNcaId& ncaId)
     return false;
 }
 
-void InstallVirtualNCA(const std::string rootPath, const NcmNcaId& ncaId, const FsStorageId destStorageId)
+void InstallVirtualNCA(const std::string rootPath, const NcmContentId& ncaId, const NcmStorageId destStorageId)
 {
     virtualFile virtualNCAFile;
     std::string ncaName = tin::util::GetNcaIdString(ncaId);
@@ -368,7 +368,7 @@ void InstallVirtualNCA(const std::string rootPath, const NcmNcaId& ncaId, const 
     catch (...) {}
 }
 
-bool InstallNSP(const std::string& filename, const FsStorageId destStorageId, const bool ignoreReqFirmVersion, const bool isFolder)
+bool InstallNSP(const std::string& filename, const NcmStorageId destStorageId, const bool ignoreReqFirmVersion, const bool isFolder)
 {
     try
     {
@@ -453,7 +453,7 @@ bool InstallNSP(const std::string& filename, const FsStorageId destStorageId, co
     return true;
 }
 
-bool InstallExtracted(const std::string& filename, const FsStorageId destStorageId, const bool ignoreReqFirmVersion)
+bool InstallExtracted(const std::string& filename, const NcmStorageId destStorageId, const bool ignoreReqFirmVersion)
 {
     return InstallNSP(filename, destStorageId, ignoreReqFirmVersion, true);
 }

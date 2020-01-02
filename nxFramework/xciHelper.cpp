@@ -1,6 +1,6 @@
 #include "xciHelper.h"
 #include "nspHelper.h"
-#include "filehelper.h"
+#include "fileHelper.h"
 #include "virtualFile.h"
 #include "nxUtils.h"
 
@@ -260,7 +260,7 @@ bool ConvertXCI(const std::string& filename)
     return ExtractXCI(filename, true);
 }
 
-bool InstallXCI(const std::string& filename, const FsStorageId destStorageId, const bool ignoreReqFirmVersion, const bool deleteXCI)
+bool InstallXCI(const std::string& filename, const NcmStorageId destStorageId, const bool ignoreReqFirmVersion, const bool deleteXCI)
 {
     // Temporary folder
     char outputDir[MAX_PATH];

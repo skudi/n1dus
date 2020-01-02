@@ -156,10 +156,10 @@ void GUI::Render(const double timer)
         char totalSDStr[32];
         char freeNandStr[32];
         char totalNandstr[32];
-        u64 freeSDu     = GetFreeSpace(FsStorageId_SdCard);
-        u64 totalSDu    = GetTotalSpace(FsStorageId_SdCard);
-        u64 freeNandu   = GetFreeSpace(FsStorageId_NandUser);
-        u64 totalNandu  = GetTotalSpace(FsStorageId_NandUser);
+        u64 freeSDu     = GetFreeSpace(NcmStorageId_SdCard);
+        u64 totalSDu    = GetTotalSpace(NcmStorageId_SdCard);
+        u64 freeNandu   = GetFreeSpace(NcmStorageId_BuiltInUser);
+        u64 totalNandu  = GetTotalSpace(NcmStorageId_BuiltInUser);
         GetSizeString(freeSDStr, freeSDu);
         GetSizeString(totalSDStr, totalSDu);
         GetSizeString(freeNandStr, freeNandu);

@@ -15,7 +15,7 @@ namespace
     {
         std::string filedir;
         std::string filename;
-        FsStorageId destStorageId;
+        NcmStorageId destStorageId;
         bool        ignoreReqFirmVersion;
         bool*       running;
         bool        deleteSourceFile;
@@ -124,10 +124,10 @@ void DLGInstall::Update(const double timer, const u64 kDown)
             dlgMode == DLG_INSTALL_EXTRACTED)
         {
             if (kDown & KEY_DLEFT)
-                destStorageId = FsStorageId_SdCard;
+                destStorageId = NcmStorageId_SdCard;
             else
             if (kDown & KEY_DRIGHT)
-                destStorageId = FsStorageId_NandUser;
+                destStorageId = NcmStorageId_BuiltInUser;
         }
 
         // Thread kick off
@@ -198,7 +198,7 @@ void DLGInstall::Update(const double timer, const u64 kDown)
                     processThreadArgs.running                = &workerThread.running;
                     processThreadArgs.deleteSourceFile       = (dlgMode == DLG_INSTALL_DELETE);
                     workerThread.running                     = true;
-                    LOG("Installing %s to %s...\n", filePath.c_str(), destStorageId==FsStorageId_SdCard?"SD Card":"Nand");
+                    LOG("Installing %s to %s...\n", filePath.c_str(), destStorageId==NcmStorageId_SdCard?"SD Card":"Nand");
                     thrd_create(&workerThread.thread, InstallThread, &processThreadArgs);
                     dlgState = DLG_PROGRESS;
                 }
@@ -214,7 +214,7 @@ void DLGInstall::Update(const double timer, const u64 kDown)
                     processThreadArgs.deleteSourceFile       = false;
                     processThreadArgs.running                = &workerThread.running;
                     workerThread.running                     = true;
-                    LOG("Installing folder %s to %s...\n", filePath.c_str(), destStorageId==FsStorageId_SdCard?"SD Card":"Nand");
+                    LOG("Installing folder %s to %s...\n", filePath.c_str(), destStorageId==NcmStorageId_SdCard?"SD Card":"Nand");
                     thrd_create(&workerThread.thread, InstallExtractedThread, &processThreadArgs);
                     dlgState = DLG_PROGRESS;
                 }
@@ -315,7 +315,7 @@ void DLGInstall::Render(const double timer)
             {
                 if(!isXCI || progressState == 2)
                     message = std::string("Installing to ") +
-                        (destStorageId==FsStorageId_SdCard?
+                        (destStorageId==NcmStorageId_SdCard?
                         std::string("SD Card"):std::string("Nand")) +
                         std::string("...");
                 else
@@ -372,7 +372,7 @@ void DLGInstall::Render(const double timer)
     {
         std::string notEnoughSpace =
             std::string("Not enough free space on ")                                        +
-            (destStorageId==FsStorageId_SdCard?std::string("SD Card"):std::string("Nand"))  +
+            (destStorageId==NcmStorageId_SdCard?std::string("SD Card"):std::string("Nand"))  +
             std::string("!");
         SDL::DrawText(SDL::Renderer, rootGui->FontHandle(GUI::Roboto),
                       205, 255, RED, notEnoughSpace.c_str(), 600);
@@ -412,12 +412,12 @@ void DLGInstall::Render(const double timer)
             TTF_SizeText(rootGui->FontHandle(GUI::Roboto), "SD Card", &txt_width, &txt_height);
             SDL::DrawText(SDL::Renderer, rootGui->FontHandle(GUI::Roboto),
                           190+350, 375-txt_height,
-                          (destStorageId == FsStorageId_SdCard)  ?CYAN:DARK_GREY, "SD Card");
+                          (destStorageId == NcmStorageId_SdCard)  ?CYAN:DARK_GREY, "SD Card");
 
             TTF_SizeText(rootGui->FontHandle(GUI::Roboto), "Nand", &txt_width, &txt_height);
             SDL::DrawText(SDL::Renderer, rootGui->FontHandle(GUI::Roboto),
                           190+900-350-txt_width, 375-txt_height,
-                          (destStorageId == FsStorageId_NandUser)?CYAN:DARK_GREY, "Nand");
+                          (destStorageId == NcmStorageId_BuiltInUser)?CYAN:DARK_GREY, "Nand");
         }
     }
 

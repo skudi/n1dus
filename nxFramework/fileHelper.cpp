@@ -311,14 +311,14 @@ bool FileExist(const char* filename)
   return (stat(filename, &buffer) == 0);
 }
 
-u64 GetFreeSpace(FsStorageId storage_id)
+u64 GetFreeSpace(NcmStorageId storage_id)
 {
     u64 freeSpace;
     nsGetFreeSpaceSize(storage_id, &freeSpace);
     return freeSpace;
 }
 
-u64 GetTotalSpace(FsStorageId storage_id)
+u64 GetTotalSpace(NcmStorageId storage_id)
 {
     u64 freeSpace;
     nsGetTotalSpaceSize(storage_id, &freeSpace);

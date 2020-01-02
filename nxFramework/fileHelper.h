@@ -34,7 +34,7 @@ int  ScanDir        (const char *dir,
 
 int  RmDirRecursive (const char* dir);
 bool FileExist(const char* filename);
-u64 GetFreeSpace(FsStorageId storage_id);
-u64 GetTotalSpace(FsStorageId storage_id);
+u64 GetFreeSpace(NcmStorageId storage_id);
+u64 GetTotalSpace(NcmStorageId storage_id);
 
 }
